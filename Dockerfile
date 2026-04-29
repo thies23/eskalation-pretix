@@ -22,3 +22,7 @@ ENV DJANGO_SETTINGS_MODULE=production_settings
 
 USER pretixuser
 RUN cd /pretix/src && make production
+USER root
+RUN chmod -R o+rX /pretix/src/pretix/static.dist/
+RUN sed -i 's/user www-data www-data;/user pretixuser pretixuser;/' /etc/nginx/nginx.conf
+USER pretixuser
